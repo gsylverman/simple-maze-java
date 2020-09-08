@@ -5,6 +5,10 @@ public class Maze {
     private LinkedList<Position> trace;
     private Position start;
 
+    public Maze() {
+        this.trace = new LinkedList<>();
+    }
+
     public int[][] getMaze() {
         return maze;
     }
