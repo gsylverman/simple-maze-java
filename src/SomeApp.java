@@ -3,25 +3,29 @@ import java.util.LinkedList;
 public class SomeApp {
     private static int[][] maze = {
             { 0, 1, 1 ,0 },
-            { 0, 1, 1 ,0 },
-            { 0, 1, 1 ,2 }
+            { 1, 1, 1 ,2 },
+            { 0, 1, 1 ,1 }
     };
     private static LinkedList<Position> trace = new LinkedList<>();
     public static void main(String[] args) {
-        Position start = new Position(0, 2);
+        if (solveMaze(new Position(0, 2))) {
+            System.out.println("You won!");
+        } else {
+            System.out.println("No path!");
+        }
+    }
+    private static boolean solveMaze(Position start) {
         trace.push(start);
-
-        while(true) {
+        while (true) {
             int y = trace.peek().getY();
             int x = trace.peek().getX();
             maze[y][x] = 0;
 
             //down
-            if(isValid(y+1, x, maze)) {
+            if (isValid(y+1, x, maze)) {
                 if(maze[y+1][x] == 2) {
-                    System.out.println("You win!");
-                    return;
-                } else if(maze[y+1][x] == 1) {
+                    return true;
+                } else if (maze[y+1][x] == 1) {
                     System.out.println("Moved down");
                     trace.push(new Position(y+1, x));
                     continue;
@@ -29,10 +33,9 @@ public class SomeApp {
             }
 
             //left
-            if(isValid(y, x-1, maze)) {
+            if (isValid(y, x-1, maze)) {
                 if(maze[y][x-1] == 2) {
-                    System.out.println("You win!");
-                    return;
+                    return true;
                 } else if(maze[y][x-1] == 1) {
                     System.out.println("Moved left");
                     trace.push(new Position(y, x-1));
@@ -41,10 +44,9 @@ public class SomeApp {
             }
 
             //up
-            if(isValid(y-1, x, maze)) {
+            if (isValid(y-1, x, maze)) {
                 if(maze[y-1][x] == 2) {
-                    System.out.println("You win!");
-                    return;
+                    return true;
                 } else if(maze[y-1][x] == 1) {
                     System.out.println("Moved up");
                     trace.push(new Position(y-1, x));
@@ -53,10 +55,9 @@ public class SomeApp {
             }
 
             //right
-            if(isValid(y, x+1, maze)) {
+            if (isValid(y, x+1, maze)) {
                 if(maze[y][x+1] == 2) {
-                    System.out.println("You win!");
-                    return;
+                    return true;
                 } else if(maze[y][x+1] == 1) {
                     System.out.println("Moved right");
                     trace.push(new Position(y, x+1));
@@ -65,14 +66,15 @@ public class SomeApp {
             }
             trace.pop();
             System.out.println("Moved back");
-            if(trace.size() <= 0) {
-                return;
+            if (trace.size() <= 0) {
+                return false;
             }
         }
     }
 
     public static boolean isValid(int y, int x, int[][] maze) {
-        if(y < 0 ||
+        if (
+                y < 0 ||
                 y >= maze.length ||
                 x < 0 ||
                 x >= maze[y].length
