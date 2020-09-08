@@ -6,7 +6,6 @@ public class MazeSolver {
             int y = maze.getTrace().peek().getY();
             int x = maze.getTrace().peek().getX();
             maze.getMaze()[y][x] = 0;
-
             //down
             if (isValid(y+1, x, maze.getMaze())) {
                 if(maze.getMaze()[y+1][x] == 2) {
@@ -18,7 +17,6 @@ public class MazeSolver {
                     continue;
                 }
             }
-
             //left
             if (isValid(y, x-1, maze.getMaze())) {
                 if(maze.getMaze()[y][x-1] == 2) {
@@ -30,7 +28,6 @@ public class MazeSolver {
                     continue;
                 }
             }
-
             //up
             if (isValid(y-1, x, maze.getMaze())) {
                 if(maze.getMaze()[y-1][x] == 2) {
@@ -42,7 +39,6 @@ public class MazeSolver {
                     continue;
                 }
             }
-
             //right
             if (isValid(y, x+1, maze.getMaze())) {
                 if(maze.getMaze()[y][x+1] == 2) {
@@ -62,11 +58,10 @@ public class MazeSolver {
         }
     }
     private static boolean isValid(int y, int x, int[][] maze) {
-        if (
-                y < 0 ||
-                        y >= maze.length ||
-                        x < 0 ||
-                        x >= maze[y].length
+        if (y < 0 ||
+                y >= maze.length ||
+                x < 0 ||
+                x >= maze[y].length
         ) {
             return false;
         }
